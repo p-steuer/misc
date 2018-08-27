@@ -1,0 +1,29 @@
+#!/bin/bash
+# Usage: . ./ockrefresh
+
+export PKCS11_SO_PIN=76543210
+export PKCS11_USER_PIN=76543210
+export PKCSLIB=/usr/local/lib/opencryptoki/libopencryptoki.so
+
+killall pkcsslotd
+
+rm -rf /usr/local/var/lib/opencryptoki//
+rm -rf /usr/local/var/lock/opencryptoki/
+rm -rf /usr/local/var/log/opencryptoki/
+
+./configure --enable-ep11tok --enable-icsftok --enable-ccatok --enable-icatok --enable-testcases --enable-tpmtok CFLAGS="-O3" # --enable-debug --enable-locks
+make -j8
+make install
+ldconfig
+
+pkcsslotd
+
+# softtok
+echo -e "87654321\nsoft\n" | pkcsconf -I -c 3
+echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 3
+echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 3
+
+# icatok
+echo -e "87654321\nica\n" | pkcsconf -I -c 1
+echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 1
+echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 1
