@@ -4,6 +4,7 @@
 export PKCS11_SO_PIN=76543210
 export PKCS11_USER_PIN=76543210
 export PKCSLIB=/usr/local/lib/opencryptoki/libopencryptoki.so
+export OPENCRYPTOKI_TRACE_LEVEL=4
 
 killall pkcsslotd
 
@@ -18,7 +19,7 @@ ldflags=""
 #cflags="-g -O0 -fprofile-arcs -ftest-coverage"
 
 # sanitizer
-cflags="-g -O3 -fstack-protector-all -fsanitize=address,signed-integer-overflow,undefined -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2"
+cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2"
 ldflags="-lubsan -lasan"
 
 # strict warnings
