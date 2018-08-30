@@ -1,13 +1,11 @@
 #!/bin/bash
 # Usage: ./ccarefresh <cardno>
 
-# usermod -aG cca_admin,cca_lfmkp,cca_cmkp,cca_clrmk,cca_setmk root
-
 cardno=$1
 panel=/opt/IBM/CCA/bin/panel.exe
+ivp=/opt/IBM/CCA/bin/ivp.e
 
 # SYM-MK
-mktype=SYM
 key1=010701010101017f7f0101010101011f0101010101017f07
 key2=1f01010101010107010101017f01011f010107010101017f
 key3=011f01010101017f010101011f01010701017f010101011f
@@ -15,4 +13,36 @@ echo -e "1\ny\n" | $panel --mk-clear-interactive -a $cardno
 echo -e "1\ny\n1\ny\n$key1\ny\n" | $panel --mk-load-interactive -a $cardno
 echo -e "1\ny\n2\ny\n$key2\ny\n" | $panel --mk-load-interactive -a $cardno
 echo -e "1\ny\n3\ny\n$key3\ny\n" | $panel --mk-load-interactive -a $cardno
-$panel --mk-set --mktype=$mktype -a $cardno
+$panel --mk-set --mktype=SYM -a $cardno
+
+# ASYM-MK
+key1=010701010101017f7f0101010101011f0101010101017f07
+key2=1f01010101010107010101017f01011f010107010101017f
+key3=011f01010101017f010101011f01010701017f010101011f
+echo -e "2\ny\n" | $panel --mk-clear-interactive -a $cardno
+echo -e "2\ny\n1\ny\n$key1\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "2\ny\n2\ny\n$key2\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "2\ny\n3\ny\n$key3\ny\n" | $panel --mk-load-interactive -a $cardno
+$panel --mk-set --mktype=ASYM -a $cardno
+
+# AES-MK
+key1=010701010101017f7f0101010101011f0101010101017f070101011f01010101
+key2=1f01010101010107010101017f01011f010107010101017f0101010101010701
+key3=011f01010101017f010101011f01010701017f010101011f11f01010701017f0
+echo -e "3\ny\n" | $panel --mk-clear-interactive -a $cardno
+echo -e "3\ny\n1\ny\n$key1\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "3\ny\n2\ny\n$key2\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "3\ny\n3\ny\n$key3\ny\n" | $panel --mk-load-interactive -a $cardno
+$panel --mk-set --mktype=AES -a $cardno
+
+# APKA-MK
+key1=010701010101017f7f0101010101011f0101010101017f070101011f01010101
+key2=1f01010101010107010101017f01011f010107010101017f0101010101010701
+key3=011f01010101017f010101011f01010701017f010101011f11f01010701017f0
+echo -e "4\ny\n" | $panel --mk-clear-interactive -a $cardno
+echo -e "4\ny\n1\ny\n$key1\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "4\ny\n2\ny\n$key2\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "4\ny\n3\ny\n$key3\ny\n" | $panel --mk-load-interactive -a $cardno
+$panel --mk-set --mktype=APKA -a $cardno
+
+$ivp
