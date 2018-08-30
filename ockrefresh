@@ -1,6 +1,8 @@
 #!/bin/bash
 # Usage: . ./ockrefresh
 
+# usermod -aG pkcs11 root
+
 export PKCS11_SO_PIN=76543210
 export PKCS11_USER_PIN=76543210
 export PKCSLIB=/usr/local/lib/opencryptoki/libopencryptoki.so
