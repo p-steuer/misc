@@ -21,7 +21,7 @@ ldflags=""
 #cflags="-g -O0 -fprofile-arcs -ftest-coverage"
 
 # sanitizer
-cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2"
+cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2 -Werror"
 ldflags="-lubsan -lasan"
 
 # strict warnings
@@ -41,7 +41,7 @@ echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 1
 echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 1
 
 # ccatok
-echo -e "87654321\nsoft\n" | pkcsconf -I -c 2
+echo -e "87654321\ncca\n" | pkcsconf -I -c 2
 echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 2
 echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 2
 
