@@ -1,0 +1,16 @@
+#!/bin/bash
+# Usage: ./ccarefresh <cardno>
+
+cardno=$1
+panel=/opt/IBM/CCA/bin/panel.exe
+
+# SYM-MK
+mktype=SYM
+key1=010701010101017f7f0101010101011f0101010101017f07
+key2=1f01010101010107010101017f01011f010107010101017f
+key3=011f01010101017f010101011f01010701017f010101011f
+echo -e "1\ny\n" | $panel --mk-clear-interactive -a $cardno
+echo -e "1\ny\n1\ny\n$key1\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "1\ny\n2\ny\n$key2\ny\n" | $panel --mk-load-interactive -a $cardno
+echo -e "1\ny\n3\ny\n$key3\ny\n" | $panel --mk-load-interactive -a $cardno
+$panel --mk-set --mktype=$mktype -a $cardno
