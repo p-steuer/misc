@@ -16,6 +16,7 @@ rm -rf /usr/local/var/log/opencryptoki/
 
 cflags=""
 ldflags=""
+cc="gcc"
 
 # test coverage
 #cflags="-g -O0 -fprofile-arcs -ftest-coverage"
@@ -28,7 +29,7 @@ ldflags="-lubsan -lasan"
 #cflags="-Wall -Wextra -std=c99 -pedantic"
 
 make clean
-./configure --enable-ep11tok --enable-icsftok --enable-ccatok --enable-icatok --enable-testcases --enable-tpmtok CFLAGS="$cflags" LDFLAGS="$ldflags" --enable-locks #--enable-debug
+./configure --enable-ep11tok --enable-icsftok --enable-ccatok --enable-icatok --enable-testcases --enable-tpmtok CC="$cc" CFLAGS="$cflags" LDFLAGS="$ldflags" --enable-locks #--enable-debug
 make -j8
 make install
 ldconfig
