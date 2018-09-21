@@ -1,5 +1,11 @@
 #!/bin/bash
 # Usage: ./ccarefresh <cardno>
+#
+# usermod -aG cca_admin root
+# usermod -aG cca_clrmk root
+# usermod -aG cca_lfmkp root
+# usermod -aG cca_cmkp root
+# usermod -aG cca_setmk root
 
 cardno=$1
 panel=/opt/IBM/CCA/bin/panel.exe
