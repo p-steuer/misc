@@ -22,7 +22,7 @@ cc="gcc"
 #cflags="-g -O0 -fprofile-arcs -ftest-coverage"
 
 # sanitizer
-cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2 -Werror"
+cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2 -Werror"
 ldflags="-lubsan -lasan"
 
 # strict warnings
