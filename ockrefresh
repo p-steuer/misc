@@ -10,26 +10,31 @@ export OPENCRYPTOKI_TRACE_LEVEL=4
 
 killall pkcsslotd
 
-rm -rf /usr/local/var/lib/opencryptoki//
+ipcrm -a
+rm -f /dev/shm/*
+
+rm -rf /usr/local/var/lib/opencryptoki/
 rm -rf /usr/local/var/lock/opencryptoki/
 rm -rf /usr/local/var/log/opencryptoki/
+rm -rf /usr/local/etc/opencryptoki/opencryptoki.conf
 
 cflags=""
 ldflags=""
 cc="gcc"
 
 # test coverage
-#cflags="-g -O0 -fprofile-arcs -ftest-coverage"
+cflags="-Wall -Wextra -pedantic -Werror"
 
 # sanitizer
-cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2 -Werror"
-ldflags="-lubsan -lasan"
+#cflags="-g -O3 -fstack-protector-all -fsanitize=address,undefined -Wformat -Wformat-security -Warray-bounds -D_FORTIFY_SOURCE=2 -Werror"
+#ldflags="-lubsan -lasan"
 
 # strict warnings
 #cflags="-Wall -Wextra -std=c99 -pedantic"
 
+./bootstrap.sh
 make clean
-./configure --enable-ep11tok --enable-icsftok --enable-ccatok --enable-icatok --enable-testcases --enable-tpmtok CC="$cc" CFLAGS="$cflags" LDFLAGS="$ldflags" --enable-locks #--enable-debug
+./configure --disable-ep11tok --disable-icsftok --disable-ccatok --disable-icatok --enable-testcases -disable-tpmtok CC="$cc" CFLAGS="$cflags" LDFLAGS="$ldflags" --enable-locks --enable-debug
 make -j8
 make install
 ldconfig
@@ -37,14 +42,14 @@ ldconfig
 pkcsslotd
 
 # icatok
-echo -e "87654321\nica\n" | pkcsconf -I -c 1
-echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 1
-echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 1
+#echo -e "87654321\nica\n" | pkcsconf -I -c 1
+#echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 1
+#echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 1
 
 # ccatok
-echo -e "87654321\ncca\n" | pkcsconf -I -c 2
-echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 2
-echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 2
+#echo -e "87654321\ncca\n" | pkcsconf -I -c 2
+#echo -e "87654321\n76543210\n76543210\n" | pkcsconf -u -c 2
+#echo -e "87654321\n76543210\n76543210\n" | pkcsconf -P -c 2
 
 # softtok
 echo -e "87654321\nsoft\n" | pkcsconf -I -c 3
